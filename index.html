@@ -156,6 +156,27 @@
     text-decoration: underline;
   }
 
+  /* Note articles */
+  #note-articles.news-list li {
+    border-top: none;
+  }
+
+  #note-articles.news-list li:first-child {
+    border-top: 1px solid var(--border);
+  }
+
+  .note-all-link {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 0.82rem;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .note-all-link:hover {
+    text-decoration: underline;
+  }
+
   /* Links */
   .ext-links {
     list-style: none;
@@ -234,6 +255,12 @@
     </div>
   </section>
 
+  <section id="note-section">
+    <h2>note 最近の記事</h2>
+    <ul id="note-articles" class="news-list"></ul>
+    <a class="note-all-link" href="https://note.com/karine_tln" target="_blank" rel="noopener">すべての記事を見る →</a>
+  </section>
+
   <section>
     <h2>外部リンク</h2>
     <ul class="ext-links">
@@ -248,5 +275,43 @@
   </footer>
 
 </div>
+<script>
+  // 固定記事（アフィリエイト等）を除外したい場合はURLを設定する
+  // 例: const SKIP_URL = 'https://note.com/karine_tln/n/xxxxxxxxxx';
+  const SKIP_URL = '';
+
+  const NOTE_USER = 'karine_tln';
+  const ARTICLE_COUNT = 3;
+
+  (async function () {
+    try {
+      const rssUrl = `https://note.com/${NOTE_USER}/rss`;
+      const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}&count=10`;
+      const res = await fetch(apiUrl);
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      if (data.status !== 'ok') throw new Error();
+
+      const articles = data.items
+        .filter(item => !SKIP_URL || item.link !== SKIP_URL)
+        .slice(0, ARTICLE_COUNT);
+
+      if (articles.length === 0) throw new Error();
+
+      const list = document.getElementById('note-articles');
+      articles.forEach(item => {
+        const d = new Date(item.pubDate);
+        const dateStr = `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
+        const li = document.createElement('li');
+        li.innerHTML =
+          `<span class="news-date">${dateStr}</span>` +
+          `<span class="news-title"><a href="${item.link}" target="_blank" rel="noopener">${item.title}</a></span>`;
+        list.appendChild(li);
+      });
+    } catch (_) {
+      document.getElementById('note-section').style.display = 'none';
+    }
+  })();
+</script>
 </body>
 </html>

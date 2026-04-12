@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>サービス | 新月通信係</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF8;
+    --surface: #FFFFFF;
+    --text: #1A1A1A;
+    --text-secondary: #5C5C5C;
+    --accent: #2C5F7C;
+    --accent-light: #E8F0F5;
+    --border: #E0DDD8;
+    --radius: 6px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-weight: 400;
+  }
+
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+  }
+
+  /* Header */
+  header {
+    margin-bottom: 56px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  header h1 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+  }
+
+  header .sub {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.08em;
+  }
+
+  nav {
+    margin-top: 14px;
+    display: flex;
+    gap: 20px;
+  }
+
+  nav a {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+
+  nav a:hover {
+    color: var(--accent);
+  }
+
+  nav a.active {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* Sections */
+  section {
+    margin-bottom: 48px;
+  }
+
+  section h2 {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--accent-light);
+  }
+
+  section p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+  }
+
+  /* Lead */
+  .lead {
+    font-size: 1rem;
+    color: var(--text);
+    line-height: 1.9;
+    margin-bottom: 0;
+  }
+
+  /* Problem list */
+  .problem-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .problem-list li {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+  }
+
+  .problem-list li::before {
+    content: "?";
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* Service list */
+  .service-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .service-list li {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+  }
+
+  .service-list li strong {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .service-list li span {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+
+  /* CTA */
+  .cta-card {
+    background: var(--accent-light);
+    border: 1px solid #c8dce8;
+    border-radius: var(--radius);
+    padding: 24px 28px;
+  }
+
+  .cta-card .cta-label {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .cta-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+  }
+
+  .cta-card .cta-contact {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .cta-card a.email-link {
+    font-size: 0.95rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .cta-card a.email-link:hover {
+    text-decoration: underline;
+  }
+
+  .cta-card .cta-note {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 12px;
+    margin-bottom: 0;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    text-align: center;
+  }
+
+  /* Responsive */
+  @media (max-width: 560px) {
+    .cta-card {
+      padding: 20px;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <h1>新月通信係</h1>
+    <div class="sub">Calibration Tower</div>
+    <nav>
+      <a href="index.html">トップ</a>
+      <a href="services.html" class="active">サービス</a>
+      <a href="about.html">事業概要</a>
+    </nav>
+  </header>
+
+  <section>
+    <h2>サービス</h2>
+    <p class="lead">AIを導入したのはよいものの、その後のAIの更新で当初の仕組みが動かなくなって困っていたりしませんか？<br>
+    あなたの事業に寄り添う、伴走型の支援をご提供します。</p>
+  </section>
+
+  <section>
+    <h2>こんなお困りごとはありませんか</h2>
+    <ul class="problem-list">
+      <li>既存のExcelや業務ツールにAIを組み込みたいが、何から手をつければよいかわからない</li>
+      <li>AIにメールやメッセージを自動返信させているが、返答の内容や品質が気になっている</li>
+      <li>そもそもどのAIが自分の業務に向いているのか、どう使えばいいのかよくわからない</li>
+      <li>AIを導入したが、モデルのアップデートで動かなくなってしまった</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>できること</h2>
+    <ul class="service-list">
+      <li>
+        <strong>AI活用の相談・選定</strong>
+        <span>業務内容をヒアリングし、目的に合ったAIツールやサービスをご提案します。導入前の「これで合ってる？」にお答えします。</span>
+      </li>
+      <li>
+        <strong>既存業務へのAI組み込み支援</strong>
+        <span>ExcelやGoogle スプレッドシート、既存の業務フローにAIを組み込む設計・実装をサポートします。</span>
+      </li>
+      <li>
+        <strong>AI出力の品質確認・改善提案</strong>
+        <span>自動返信や文書生成など、すでに動かしているAIの出力内容を確認し、問題があれば改善方法をご提案します。</span>
+      </li>
+      <li>
+        <strong>導入後の継続サポート</strong>
+        <span>AIのアップデートや仕様変更による不具合への対応、運用上の疑問への継続的なサポートをご提供します。</span>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>まずはご相談ください</h2>
+    <div class="cta-card">
+      <div class="cta-label">初回相談 無料</div>
+      <p>「こんな使い方はできますか？」「今の使い方で大丈夫でしょうか？」など、気軽にお声がけください。</p>
+      <div class="cta-contact">
+        <a href="mailto:calibration.tower@gmail.com" class="email-link">calibration.tower@gmail.com</a>
+      </div>
+      <p class="cta-note">※ 初回相談後、対応内容・費用については個別にご案内します。</p>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2026 新月通信係（Calibration Tower）
+  </footer>
+
+</div>
+</body>
+</html>

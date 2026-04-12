@@ -103,6 +103,11 @@
     padding: 10px 0;
   }
 
+  .info-table td a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
   /* Service list */
   .services {
     list-style: none;
@@ -128,6 +133,92 @@
   .services li span {
     font-size: 0.85rem;
     color: var(--text-secondary);
+  }
+
+  /* Target customers */
+  .target-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .target-list li {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    padding: 10px 16px;
+    background: var(--accent-light);
+    border-radius: var(--radius);
+    border-left: 3px solid var(--accent);
+  }
+
+  /* Flow steps */
+  .flow-steps {
+    list-style: none;
+    counter-reset: step;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .flow-steps li {
+    counter-increment: step;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    padding: 10px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .flow-steps li::before {
+    content: counter(step);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  /* Pricing */
+  .pricing {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .pricing li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    gap: 16px;
+  }
+
+  .pricing li .price-label {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .pricing li .price-value {
+    color: var(--accent);
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .pricing-note {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin-top: 12px;
   }
 
   /* Works */
@@ -165,6 +256,67 @@
 
   .works li a:hover {
     text-decoration: underline;
+  }
+
+  /* Credentials */
+  .credentials {
+    list-style: none;
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .credentials li {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    padding: 8px 14px;
+    border-left: 2px solid var(--border);
+  }
+
+  /* Report sample TOC */
+  .report-sample {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .report-sample .report-header {
+    background: var(--accent-light);
+    padding: 12px 20px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+  }
+
+  .report-toc {
+    list-style: none;
+    counter-reset: toc;
+    padding: 8px 0;
+  }
+
+  .report-toc li {
+    counter-increment: toc;
+    display: flex;
+    gap: 12px;
+    padding: 9px 20px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.87rem;
+    color: var(--text-secondary);
+  }
+
+  .report-toc li:last-child {
+    border-bottom: none;
+  }
+
+  .report-toc li::before {
+    content: counter(toc) ".";
+    font-weight: 500;
+    color: var(--accent);
+    min-width: 18px;
+    flex-shrink: 0;
   }
 
   /* Links */
@@ -210,6 +362,12 @@
     .info-table th {
       width: 100px;
     }
+
+    .pricing li {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
   }
 </style>
 </head>
@@ -228,7 +386,7 @@
       <tr><th>開業日</th><td>2026年4月4日</td></tr>
       <tr><th>事業形態</th><td>個人事業</td></tr>
       <tr><th>事業領域</th><td>AI活用コンサルティング、AI出力品質検査、デジタルコンテンツ制作、情報通信</td></tr>
-      <tr><th>連絡先</th><td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="87e4e6ebeee5f5e6f3eee8e9a9f3e8f0e2f5c7e0eae6eeeba9e4e8ea">[email&#160;protected]</a></td></tr>
+      <tr><th>連絡先</th><td><a href="mailto:calibration.tower@gmail.com">calibration.tower@gmail.com</a></td></tr>
     </table>
   </section>
 
@@ -251,6 +409,45 @@
   </section>
 
   <section>
+    <h2>対象顧客</h2>
+    <ul class="target-list">
+      <li>AIを業務利用している小規模事業者・中小企業</li>
+      <li>SIer支援契約終了後、AI運用を自走する必要がある企業</li>
+      <li>AI出力の品質管理体制を構築したい企業</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>業務の流れ</h2>
+    <ol class="flow-steps">
+      <li>お問い合わせ・ヒアリング</li>
+      <li>AI利用状況の簡易診断</li>
+      <li>品質評価の実施（統計的検査）</li>
+      <li>評価レポート納品</li>
+      <li>改善支援（任意・継続契約）</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>料金体系</h2>
+    <ul class="pricing">
+      <li>
+        <span class="price-label">初回診断</span>
+        <span class="price-value">無料</span>
+      </li>
+      <li>
+        <span class="price-label">評価レポート作成</span>
+        <span class="price-value">案件ごとに見積</span>
+      </li>
+      <li>
+        <span class="price-label">継続品質モニタリング</span>
+        <span class="price-value">月額契約</span>
+      </li>
+    </ul>
+    <p class="pricing-note">※ 詳細はお問い合わせください</p>
+  </section>
+
+  <section>
     <h2>成果物・ポートフォリオ</h2>
     <ul class="works">
       <li>
@@ -264,6 +461,28 @@
         <a href="https://karine-mue.github.io/Terminus-Belli/" target="_blank" rel="noopener">サイトを見る →</a>
       </li>
     </ul>
+    <ul class="credentials">
+      <li>note.com での技術記事執筆（657+本、2022年〜継続中）</li>
+      <li>東京大学松尾研究室 大規模言語モデル講座 修了</li>
+      <li>AI安全性に関する外部レポート提出実績あり</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>評価レポート 構成例</h2>
+    <p>品質評価レポートの構造サンプルです。具体的な検査内容は非公開としています。</p>
+    <div class="report-sample">
+      <div class="report-header">AI品質評価レポート — 構成</div>
+      <ol class="report-toc">
+        <li>Executive Summary（概要）</li>
+        <li>検査環境（対象モデル・条件）</li>
+        <li>検査手法（比較対照実験設計）</li>
+        <li>テストケース結果（カテゴリ別）</li>
+        <li>結果サマリー（表形式）</li>
+        <li>構造的分析（根本原因の特定）</li>
+        <li>改善提案</li>
+      </ol>
+    </div>
   </section>
 
   <section>
@@ -271,4 +490,14 @@
     <ul class="ext-links">
       <li><a href="https://github.com/karine-mue" target="_blank" rel="noopener">GitHub</a></li>
       <li><a href="https://youtube.com/@karine_tln?=si=7zqHDKzrECZ8NKD-" target="_blank" rel="noopener">YouTube</a></li>
-      <li><a href="https://note.com/karine_tln" target="_blank" rel="noopener">note.com</a></
+      <li><a href="https://note.com/karine_tln" target="_blank" rel="noopener">note.com</a></li>
+    </ul>
+  </section>
+
+  <footer>
+    &copy; 2026 新月通信係（Calibration Tower）
+  </footer>
+
+</div>
+</body>
+</html>

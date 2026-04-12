@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新月通信係 | Calibration Tower</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF8;
+    --surface: #FFFFFF;
+    --text: #1A1A1A;
+    --text-secondary: #5C5C5C;
+    --accent: #2C5F7C;
+    --accent-light: #E8F0F5;
+    --border: #E0DDD8;
+    --radius: 6px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-weight: 400;
+  }
+
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+  }
+
+  /* Header */
+  header {
+    margin-bottom: 56px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  header h1 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+  }
+
+  header .sub {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.08em;
+  }
+
+  /* Sections */
+  section {
+    margin-bottom: 48px;
+  }
+
+  section h2 {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--accent-light);
+  }
+
+  section p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+  }
+
+  /* Info table */
+  .info-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  .info-table tr {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .info-table th {
+    text-align: left;
+    font-weight: 500;
+    color: var(--text);
+    padding: 10px 16px 10px 0;
+    width: 140px;
+    vertical-align: top;
+    white-space: nowrap;
+  }
+
+  .info-table td {
+    color: var(--text-secondary);
+    padding: 10px 0;
+  }
+
+  /* Service list */
+  .services {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .services li {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+  }
+
+  .services li strong {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .services li span {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+
+  /* Works */
+  .works {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .works li {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+  }
+
+  .works li .work-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .works li .work-desc {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+
+  .works li a {
+    font-size: 0.8rem;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .works li a:hover {
+    text-decoration: underline;
+  }
+
+  /* Links */
+  .ext-links {
+    list-style: none;
+    display: flex;
+    gap: 24px;
+  }
+
+  .ext-links a {
+    font-size: 0.9rem;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .ext-links a:hover {
+    border-bottom-color: var(--accent);
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    text-align: center;
+  }
+
+  /* Responsive */
+  @media (max-width: 560px) {
+    .works {
+      grid-template-columns: 1fr;
+    }
+
+    .ext-links {
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .info-table th {
+      width: 100px;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <h1>新月通信係</h1>
+    <div class="sub">Calibration Tower</div>
+  </header>
+
+  <section>
+    <h2>事業概要</h2>
+    <table class="info-table">
+      <tr><th>屋号</th><td>新月通信係（Calibration Tower）</td></tr>
+      <tr><th>開業日</th><td>2026年4月4日</td></tr>
+      <tr><th>事業形態</th><td>個人事業</td></tr>
+      <tr><th>事業領域</th><td>AI活用コンサルティング、AI出力品質検査、デジタルコンテンツ制作、情報通信</td></tr>
+      <tr><th>連絡先</th><td>calibration.tower@gmail.com</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>提供サービス</h2>
+    <ul class="services">
+      <li>
+        <strong>AI出力品質モニタリング</strong>
+        <span>統計的手法によるAI生成テキストの品質異常検出。LLMではなく統計的逸脱検知で検査を行い、サイレント劣化を早期に発見します。</span>
+      </li>
+      <li>
+        <strong>AI活用コンサルティング</strong>
+        <span>企業のAI導入・運用における課題診断と改善提案。SIer支援契約終了後の自走支援を含みます。</span>
+      </li>
+      <li>
+        <strong>デジタルコンテンツ制作</strong>
+        <span>技術文書、ガイドライン、Webアプリケーションの設計・開発。</span>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>成果物・ポートフォリオ</h2>
+    <ul class="works">
+      <li>
+        <div class="work-name">Recast.mt</div>
+        <div class="work-desc">LLMを形式変換器として活用するWebツール</div>
+        <a href="https://karine-mue.github.io/Recast.mt/" target="_blank" rel="noopener">サイトを見る →</a>
+      </li>
+      <li>
+        <div class="work-name">Terminus-Belli</div>
+        <div class="work-desc">AI企業6派閥の領土制圧PWAゲーム</div>
+        <a href="https://karine-mue.github.io/Terminus-Belli/" target="_blank" rel="noopener">サイトを見る →</a>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>外部リンク</h2>
+    <ul class="ext-links">
+      <li><a href="https://github.com/karine-mue" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://youtube.com/@karine_tln?=si=7zqHDKzrECZ8NKD-" target="_blank" rel="noopener">YouTube</a></li>
+      <li><a href="https://note.com/karine_tln" target="_blank" rel="noopener">note.com</a></li>
+    </ul>
+  </section>
+
+  <footer>
+    &copy; 2026 新月通信係（Calibration Tower）
+  </footer>
+
+</div>
+</body>
+</html>

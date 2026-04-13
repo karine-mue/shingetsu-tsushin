@@ -44,6 +44,22 @@ header {
   padding-bottom: 32px;
 }
 
+header .site-name {
+  font-size: 13px;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+}
+
+header .site-name a {
+  color: var(--text-dim);
+  text-decoration: none;
+}
+
+header .site-name a:hover {
+  color: var(--accent2);
+}
+
 header h1 {
   font-size: 26px;
   font-weight: 500;
@@ -55,6 +71,28 @@ header h1 {
 header p.subtitle {
   color: var(--text-dim);
   font-size: 15px;
+}
+
+nav.site-nav {
+  margin-top: 14px;
+  display: flex;
+  gap: 20px;
+}
+
+nav.site-nav a {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+
+nav.site-nav a:hover {
+  color: var(--accent2);
+}
+
+nav.site-nav a.active {
+  color: var(--accent2);
+  font-weight: 500;
 }
 
 .toc {
@@ -334,8 +372,15 @@ footer {
 <div class="container">
 
 <header>
+  <div class="site-name"><a href="index.html">新月通信係</a></div>
   <h1>AIに効く指示・フィードバック テンプレ集</h1>
   <p class="subtitle">Claude / ChatGPT / Gemini / Copilot 共通 ─ どの職場・どのAIでも使える実務パターン</p>
+  <nav class="site-nav">
+    <a href="index.html">トップ</a>
+    <a href="services.html">サービス</a>
+    <a href="about.html">事業概要</a>
+    <a href="ai-feedback-guide-light.html" class="active">Tips</a>
+  </nav>
 </header>
 
 <div class="toc">

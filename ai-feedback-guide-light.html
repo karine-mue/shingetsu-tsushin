@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIに効く指示・フィードバック テンプレ集</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f5f0;
+  --surface: #ffffff;
+  --surface2: #f0ede6;
+  --border: #d6d0c4;
+  --text: #2c2a26;
+  --text-dim: #7a7568;
+  --accent: #b5742d;
+  --accent2: #2a6faa;
+  --bad: #c0392b;
+  --good: #1e7a4a;
+  --tag-bg: rgba(181,116,45,0.1);
+  --tag-text: #b5742d;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.container {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+header {
+  margin-bottom: 48px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 32px;
+}
+
+header h1 {
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+}
+
+header p.subtitle {
+  color: var(--text-dim);
+  font-size: 15px;
+}
+
+.toc {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 40px;
+}
+
+.toc h2 {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.toc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 24px;
+}
+
+.toc a {
+  color: var(--accent2);
+  text-decoration: none;
+  font-size: 15px;
+  padding: 4px 0;
+  display: block;
+  transition: color 0.15s;
+}
+
+.toc a:hover { color: var(--accent); }
+
+.principle-box {
+  background: var(--surface);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  padding: 20px 24px;
+  margin-bottom: 40px;
+}
+
+.principle-box h2 {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.principle-box ol {
+  padding-left: 20px;
+  color: var(--text);
+  font-size: 18px;
+}
+
+.principle-box li {
+  margin-bottom: 6px;
+}
+
+.principle-box li strong {
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+section.category {
+  margin-bottom: 48px;
+}
+
+section.category > h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cat-tag {
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 16px 22px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+  transition: background 0.15s;
+}
+
+.card-header:hover {
+  background: var(--surface2);
+}
+
+.card-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-right: 10px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #1a1a1a;
+  flex: 1;
+}
+
+.card-arrow {
+  color: var(--text-dim);
+  font-size: 18px;
+  transition: transform 0.2s;
+}
+
+.card.open .card-arrow {
+  transform: rotate(90deg);
+}
+
+.card-body {
+  display: none;
+  padding: 0 20px 18px;
+  border-top: 1px solid var(--border);
+}
+
+.card.open .card-body {
+  display: block;
+  padding-top: 16px;
+}
+
+.bad-good {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 600px) {
+  .bad-good { grid-template-columns: 1fr; }
+  .toc-grid { grid-template-columns: 1fr; }
+}
+
+.bad-box, .good-box {
+  border-radius: 6px;
+  padding: 14px 16px;
+  font-size: 13px;
+}
+
+.bad-box {
+  background: rgba(192,57,43,0.06);
+  border: 1px solid rgba(192,57,43,0.25);
+}
+
+.good-box {
+  background: rgba(30,122,74,0.06);
+  border: 1px solid rgba(30,122,74,0.25);
+}
+
+.box-label {
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+
+.bad-box .box-label { color: var(--bad); }
+.good-box .box-label { color: var(--good); }
+
+.box-text {
+  font-family: 'JetBrains Mono', 'Noto Sans JP', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.bad-box .box-text { color: #9e3030; }
+.good-box .box-text { color: #1a6b40; }
+
+.why {
+  font-size: 15px;
+  color: var(--text-dim);
+  margin-top: 8px;
+  padding-left: 12px;
+  border-left: 2px solid var(--border);
+}
+
+.why strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.note {
+  font-size: 14px;
+  color: var(--accent);
+  margin-top: 10px;
+  font-style: italic;
+}
+
+.quick-ref {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-top: 48px;
+}
+
+.quick-ref h2 {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.quick-ref table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.quick-ref th {
+  text-align: left;
+  color: var(--text-dim);
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.quick-ref td {
+  padding: 10px;
+  border-bottom: 1px solid rgba(214,208,196,0.7);
+  vertical-align: top;
+}
+
+.quick-ref td:first-child {
+  color: var(--text-dim);
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.quick-ref td:nth-child(2) {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: #1a6b40;
+}
+
+footer {
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+  color: var(--text-dim);
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>AIに効く指示・フィードバック テンプレ集</h1>
+  <p class="subtitle">Claude / ChatGPT / Gemini / Copilot 共通 ─ どの職場・どのAIでも使える実務パターン</p>
+</header>
+
+<div class="toc">
+  <h2>目次</h2>
+  <div class="toc-grid">
+    <a href="#sec-principle">基本原則</a>
+    <a href="#sec-japanese">日本語の「察し」問題</a>
+    <a href="#sec-correction">修正・ダメ出し</a>
+    <a href="#sec-scope">スコープ制御</a>
+    <a href="#sec-output">出力制御</a>
+    <a href="#sec-quality">品質管理</a>
+    <a href="#sec-context">文脈・前提制御</a>
+    <a href="#sec-noncode">非コーディング業務</a>
+    <a href="#sec-quickref">短文テンプレ一覧</a>
+  </div>
+</div>
+
+<!-- ===== 基本原則 ===== -->
+<div class="principle-box" id="sec-principle">
+  <h2>基本原則 ─ 全パターン共通の構造</h2>
+  <ol>
+    <li><strong>受領</strong> ─ 出力をまず受け取る（感情的反応を挟まない）</li>
+    <li><strong>差分の特定</strong> ─ 何がどうズレているか具体的に示す</li>
+    <li><strong>基準の提示</strong> ─ 何を正とするか明示する</li>
+    <li><strong>行動の指定</strong> ─ 次に何をしてほしいか明記する</li>
+    <li><strong>形式の指定</strong> ─ 出力の構造・順序・粒度を指定する（任意）</li>
+  </ol>
+</div>
+
+<!-- ===== 日本語の察し問題 ===== -->
+<section class="category" id="sec-japanese">
+  <h2>日本語の「察し」問題 <span class="cat-tag">日本語特有</span></h2>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">J-01</span>
+      <span class="card-title">主語・目的語の省略</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「それ変えといて」<br>「あれ直して」<br>「さっきのやつ」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「関数Xの戻り値を、型Yに変更してください」<br>「3番目に出力したCSVのヘッダー行を修正してください」</div>
+        </div>
+      </div>
+      <div class="why">AIは「それ」「あれ」の指示対象を文脈から推測するが、会話が長くなると参照先が曖昧になる。人間同士なら画面を指差せるが、AIとのやりとりでは<strong>名詞で特定する</strong>方が確実。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">J-02</span>
+      <span class="card-title">文末ぼかし・婉曲否定</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「ちょっと違うかな…」<br>「うーん、微妙かも」<br>「もうちょっとなんとかならない？」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「期待と異なる点: [具体]。修正方向: [具体]。この方針で修正してください」</div>
+        </div>
+      </div>
+      <div class="why">日本語の婉曲表現はAIにとって<strong>否定なのか保留なのか判定困難</strong>。「微妙」は「ダメ」なのか「惜しい」なのか信号強度が不足する。修正してほしいなら「修正してください」と明示する。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">J-03</span>
+      <span class="card-title">「いい感じにして」（丸投げ）</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「いい感じにまとめて」<br>「きれいにして」<br>「もうちょっとそれっぽく」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「次の基準で整形してください: 見出しはH2、箇条書きは3階層まで、1項目40字以内」<br>「トーンは社内報告書、敬体、主語明示」</div>
+        </div>
+      </div>
+      <div class="why">「いい感じ」の定義はAI側で任意に補完される。結果が期待と合わなくても、指示が曖昧な以上AIの出力は「指示通り」。<strong>基準を外から渡す</strong>ことで出力が安定する。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">J-04</span>
+      <span class="card-title">「普通は〜だよね」（暗黙の常識の押し付け）</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「普通こうするでしょ」<br>「常識的に考えて」<br>「当然〜だよね？」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「このプロジェクトでは[具体的な規約/慣例]に従ってください。具体的には: ①… ②…」</div>
+        </div>
+      </div>
+      <div class="why">AIの「普通」と人間の「普通」は異なる。AIの常識は訓練データの頻度分布であり、特定の職場・業界の慣例とは一致しない。<strong>ローカルルールは毎回明示</strong>する。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">J-05</span>
+      <span class="card-title">疑問形での命令（「〜してもらえると嬉しいんだけど」）</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「〜できたりする？」<br>「〜してもらえるとありがたいんだけど」<br>「〜な方向もありかなと思って」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「〜してください」<br>「〜の方針で修正してください」</div>
+        </div>
+      </div>
+      <div class="why">日本語の間接的依頼はAIに「質問」として解釈されることがある。「できたりする？」→「はい、できます」で終わるリスク。<strong>依頼は命令形で閉じる</strong>。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">J-06</span>
+      <span class="card-title">感情的な語気で伝える</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「は？」「なんでそうなるの？」<br>「マジで意味わからん」<br>「もういいよ…」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「出力が期待と異なります。期待: [X]。実際: [Y]。差分を確認して修正してください」</div>
+        </div>
+      </div>
+      <div class="why">感情表現はAIに対して情報量ゼロ。人間相手なら「怒ってる=重要度が高い」と伝わるが、AIは感情信号から修正タスクを生成できない。<strong>期待値と実測値の差分</strong>を渡す。</div>
+      <div class="note">※ 一部モデルは感情的入力に対して過剰な謝罪・防御的応答に入り、以降の出力品質が低下する場合がある。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 修正・ダメ出し ===== -->
+<section class="category" id="sec-correction">
+  <h2>修正・ダメ出し <span class="cat-tag">GPTテンプレ拡張</span></h2>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">C-01</span>
+      <span class="card-title">「違う」→ ズレ指摘＋基準＋再実行</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「違う」「おかしい」「ちゃんとして」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「[X]の点が期待とズレています。[基準文書/条件]に基づいて再確認し、修正版を出してください」</div>
+        </div>
+      </div>
+      <div class="why">「何が」「何と比べて」ズレているかを示すと、AIは差分検出→修正のパイプラインに入れる。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">C-02</span>
+      <span class="card-title">「ハルシネーション」→ 事実/推測/要確認の分離</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「嘘つかないで」「でたらめ言うな」「ハルシネーションやめて」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「この回答に、提示していない前提や根拠不明の情報が含まれています。与えた情報のみを根拠に、事実/推測/要確認の3区分で再整理してください」</div>
+        </div>
+      </div>
+      <div class="why">「推測を分けて」と指示することで、AIに自己検証フェーズを強制できる。「嘘つくな」は行動指示として機能しない。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">C-03</span>
+      <span class="card-title">「勝手に決めないで」→ 選択肢提示の要求</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「勝手に決めるな」「誰がそう決めた？」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「その部分は未確定です。決め打ちせず選択肢として整理してください。各案のメリット・デメリットを併記してください」</div>
+        </div>
+      </div>
+      <div class="why">AIは空欄を埋める傾向がある（補完バイアス）。未決定箇所を明示し、「選択肢として出せ」と指示すると穴埋めを抑制できる。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">C-04</span>
+      <span class="card-title">「前と言ってること違う」→ 制約再掲</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「さっき言ったよね」「前に言ったこと忘れてる」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「前提を再掲します。守る条件: ①… ②… ③…。この条件を満たすように修正してください」</div>
+        </div>
+      </div>
+      <div class="why">長い会話ではコンテキストウィンドウの制約や注意の分散で前提が薄れる。<strong>「覚えてるはず」を前提にしない。再掲する方が速くて確実。</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== スコープ制御 ===== -->
+<section class="category" id="sec-scope">
+  <h2>スコープ制御 <span class="cat-tag">過剰対応の抑制</span></h2>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">S-01</span>
+      <span class="card-title">「余計なことしないで」→ 変更範囲の明示的制限</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「余計なことすんな」「聞いてないことまでやるな」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「今回は最小修正で進めます。変更範囲: [X]のみ。既存の構造・命名・インターフェースは変更しないでください」</div>
+        </div>
+      </div>
+      <div class="why">AIは「ついでに改善」しがち。スコープを明示しないと、頼んでいないリファクタや設計変更が入る。<strong>「触らない範囲」を明示</strong>する方が効く。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">S-02</span>
+      <span class="card-title">「そこじゃない」→ 優先対象の再設定</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「そこじゃなくて！」「論点ずれてる」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「優先対象を変更します。[X]ではなく[Y]に集中してください。[X]は今回対象外です」</div>
+        </div>
+      </div>
+      <div class="why">「そこじゃない」は「どこか」を示していない。<strong>正しい対象と除外対象の両方</strong>を渡す。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">S-03</span>
+      <span class="card-title">影響範囲の事前確認</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「その修正、別のところ壊してない？」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「修正を実行する前に、影響範囲・副作用・破壊的変更の可能性を洗い出してください。その後、安全な修正版を提示してください」</div>
+        </div>
+      </div>
+      <div class="why">修正と影響分析を<strong>分離した2段階</strong>にすることで、AIの自己検証が働く。一気にやらせると影響確認が省略されやすい。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 出力制御 ===== -->
+<section class="category" id="sec-output">
+  <h2>出力制御 <span class="cat-tag">形式・粒度・長さ</span></h2>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">O-01</span>
+      <span class="card-title">「長い」→ 構造と上限の指定</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「長い」「短くして」「要点だけ」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「結論→理由→修正案の順で、各項目3行以内にまとめてください」<br>「100字以内で要約してください」</div>
+        </div>
+      </div>
+      <div class="why">「短く」は相対的で基準がない。<strong>構造（順序）と量（行数・字数）の両方</strong>を指定すると安定する。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">O-02</span>
+      <span class="card-title">「雑すぎる」→ 粒度の引き上げ</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「雑すぎ」「もっとちゃんと」「適当だなあ」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「粒度を上げてください。各ステップで入力→処理→出力を明示し、省略している中間処理も展開してください」</div>
+        </div>
+      </div>
+      <div class="why">「雑」は評価であり指示ではない。<strong>どの軸で詳細化するか</strong>（手順分解、データフロー、条件分岐など）を指定する。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">O-03</span>
+      <span class="card-title">「コードだけ出して」→ 出力要素の限定</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「説明いらない」「余計なこと言わなくていい」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「出力はコードのみ。説明は省略してください。変更点はコード内コメントで最小限に記載してください」</div>
+        </div>
+      </div>
+      <div class="why">AIは説明を付与する強い傾向がある。<strong>「何を出すか」と「何を出さないか」の両方</strong>を指定する。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">O-04</span>
+      <span class="card-title">「まず差分だけ見せて」→ 段階的出力</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「全部出すな」「段階踏んで」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「Step 1: 変更箇所の差分を箇条書きで提示。Step 2: 確認後に修正版を出力。Step 1から始めてください」</div>
+        </div>
+      </div>
+      <div class="why">一気に全量を出させると確認が困難。<strong>ステップを分けて、人間のチェックポイントを挟む</strong>設計にする。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 品質管理 ===== -->
+<section class="category" id="sec-quality">
+  <h2>品質管理 <span class="cat-tag">検証・テスト</span></h2>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">Q-01</span>
+      <span class="card-title">「根拠ある？」→ トレーサビリティ要求</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「根拠は？」「なんで？」「ソースは？」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「各結論について、根拠（どの仕様/データ/前提から導出したか）を対応づけて示してください。形式: 結論→根拠→該当箇所」</div>
+        </div>
+      </div>
+      <div class="why">「根拠は？」だけだとAIはもっともらしい説明を生成する（後付け合理化）。<strong>入力情報への紐づけ</strong>を要求することで検証可能にする。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">Q-02</span>
+      <span class="card-title">「テストしてないでしょ」→ 自己検証フェーズの強制</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「動くの？」「テストした？」「大丈夫？」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「この修正に対して、正常系・異常系・境界値のテストケースを先に列挙してください。そのうえで修正内容が妥当か確認してください」</div>
+        </div>
+      </div>
+      <div class="why">テストケースを先に出させることで、AI自身が修正の妥当性を検証する構造を作れる。「大丈夫？」には「大丈夫です」としか返ってこない。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">Q-03</span>
+      <span class="card-title">「本当にそれで合ってる？」→ 反例の要求</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「合ってる？」「確実？」「間違いない？」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「この結論が成立しないケースを3つ挙げてください。それでも結論が維持されるか評価してください」</div>
+        </div>
+      </div>
+      <div class="why">AIに「合ってる？」と聞くと「合っている」と答える確率が高い（肯定バイアス）。<strong>反例を生成させる</strong>と自己検証が機能する。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 文脈・前提制御 ===== -->
+<section class="category" id="sec-context">
+  <h2>文脈・前提制御 <span class="cat-tag">会話管理</span></h2>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">X-01</span>
+      <span class="card-title">リセット宣言</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「もう一回最初から」「全部忘れて」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「ここまでのやり取りは参考程度にしてください。以下の前提のみで再提案してください: ①… ②… ③…。出力形式: [指定]」</div>
+        </div>
+      </div>
+      <div class="why">「忘れて」はAIの動作原理上困難（コンテキストウィンドウに残っている）。「忘れろ」ではなく<strong>「この前提だけで作れ」と入力を再定義</strong>する。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">X-02</span>
+      <span class="card-title">ロール・立場の設定</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「プロっぽく書いて」「専門家として」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「読者は[対象]、目的は[X]、専門用語は[使う/避ける]、トーンは[具体]で書いてください」</div>
+        </div>
+      </div>
+      <div class="why">「プロっぽく」はAIにとって曖昧。<strong>読者・目的・語彙レベル・トーンを分解</strong>して渡す方が出力が安定する。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">X-03</span>
+      <span class="card-title">「わかった？」への代替</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「わかった？」「理解した？」「OK？」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「ここまでの前提を箇条書きで要約してください。認識が合っていれば次に進みます」</div>
+        </div>
+      </div>
+      <div class="why">「わかった？」にAIは常に「はい」と答える。<strong>要約させることで実際の理解状態を可視化</strong>できる。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 非コーディング業務 ===== -->
+<section class="category" id="sec-noncode">
+  <h2>非コーディング業務 <span class="cat-tag">文書・調査・翻訳</span></h2>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">N-01</span>
+      <span class="card-title">文書作成:「ちょうどいい感じに書いて」→ 要素分解</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「いい感じに書いて」「ちゃんとした文章にして」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「目的: [X]。読者: [Y]。文体: [常体/敬体]。構成: [序論→本論→結論]。1セクション[N]文以内。固有名詞は[リスト]を使用」</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">N-02</span>
+      <span class="card-title">翻訳:「自然な日本語にして」→ 変換方針の指定</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「自然にして」「こなれた訳にして」「翻訳調やめて」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「翻訳方針: 技術用語は英語のまま残す。主語は明示する。一文は60字以内。読者は[対象]」<br>「直訳/意訳/超訳のどれで訳すか、判断が分かれる箇所は原文を併記してください」</div>
+        </div>
+      </div>
+      <div class="why">「自然」の基準は人によって異なる。<strong>用語処理・文長・読者</strong>を指定すると「自然」の定義がAIと共有できる。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">N-03</span>
+      <span class="card-title">要約:「まとめて」→ 要約の基準指定</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「まとめて」「要約して」「ポイントだけ」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「[X]の観点で要約してください。要約の粒度: 主張→根拠→結論。300字以内。元文書にない情報は追加しないでください」</div>
+        </div>
+      </div>
+      <div class="why">要約は情報の取捨選択。<strong>何の観点で残し、何を落とすか</strong>を指定しないとAIが独自に重要度を判定する。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-num">N-04</span>
+      <span class="card-title">調査:「調べて」→ 調査範囲と出力形式の指定</span>
+      <span class="card-arrow">▶</span>
+    </div>
+    <div class="card-body">
+      <div class="bad-good">
+        <div class="bad-box">
+          <div class="box-label">言いがち</div>
+          <div class="box-text">「調べて」「情報集めて」</div>
+        </div>
+        <div class="good-box">
+          <div class="box-label">効く言い方</div>
+          <div class="box-text">「[テーマ]について、[観点A/B/C]の切り口で調べてください。各項目に出典（URL等）を付けてください。不明な点は「不明」と明記」</div>
+        </div>
+      </div>
+      <div class="why">調査範囲を限定しないとAIは広く浅く展開する。<strong>切り口・出典要求・不明の扱い</strong>を先に決めると精度が上がる。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 短文テンプレ一覧 ===== -->
+<div class="quick-ref" id="sec-quickref">
+  <h2>短文テンプレ ─ コピペ用</h2>
+  <table>
+    <tr><th>場面</th><th>テンプレ</th></tr>
+    <tr><td>ズレ指摘</td><td>[X]が[基準]と不一致です。再確認して修正版を出してください</td></tr>
+    <tr><td>推測排除</td><td>推測を分離し、与えた情報のみで再整理してください</td></tr>
+    <tr><td>最小修正</td><td>既存構造は変えず、該当箇所のみ最小修正で</td></tr>
+    <tr><td>差分確認</td><td>まず変更箇所の差分を箇条書きで。修正版はその後で</td></tr>
+    <tr><td>影響範囲</td><td>修正前に影響範囲・副作用・破壊的変更を洗い出してください</td></tr>
+    <tr><td>テスト観点</td><td>正常系・異常系・境界値のテストケースを先に列挙してください</td></tr>
+    <tr><td>反例要求</td><td>この結論が成立しないケースを3つ挙げて、維持されるか評価してください</td></tr>
+    <tr><td>前提再掲</td><td>守る条件: ①… ②… ③…。この条件で修正してください</td></tr>
+    <tr><td>出力制御</td><td>結論→理由→修正案の順、各3行以内で</td></tr>
+    <tr><td>粒度指定</td><td>各ステップで入力→処理→出力を明示してください</td></tr>
+    <tr><td>選択肢要求</td><td>決め打ちせず、選択肢として整理してください</td></tr>
+    <tr><td>理解確認</td><td>ここまでの前提を要約してください。合っていれば次に進みます</td></tr>
+    <tr><td>リセット</td><td>以下の前提のみで再提案してください: ①… ②… ③…</td></tr>
+    <tr><td>翻訳方針</td><td>技術用語は英語維持。一文60字以内。判断が割れる箇所は原文併記</td></tr>
+    <tr><td>要約方針</td><td>[観点]で要約。主張→根拠→結論。[N]字以内。情報追加禁止</td></tr>
+  </table>
+</div>
+
+<footer>
+  Claude / ChatGPT / Gemini / Copilot 共通。元テンプレ: GPT-5.4出力を基に拡張・再構成。
+</footer>
+
+</div>
+
+<script>
+document.querySelectorAll('.card-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const card = header.parentElement;
+    card.classList.toggle('open');
+  });
+});
+</script>
+</body>
+</html>
